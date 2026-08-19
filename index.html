@@ -3,12 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fetch API Practice</title>
+  <title>Countries API</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <h1>Countries API</h1>
+  <header>
+    <h1>Countries API</h1>
+    <p>Explore countries from around the world</p>
+  </header>
+
+  <main>
+
+    <!-- Loading indicator -->
+    <p id="loading">Loading countries...</p>
+
+    <!-- Error message -->
+    <p id="error"></p>
+
+    <!-- Empty container for dynamically created cards -->
+    <section id="countries-container"></section>
+
+  </main>
 
   <script src="script.js"></script>
+
 </body>
 </html>
