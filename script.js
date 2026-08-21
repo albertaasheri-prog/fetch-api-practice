@@ -1,6 +1,10 @@
 const countriesContainer = document.getElementById("countries-container");
 const loading = document.getElementById("loading");
 const errorMessage = document.getElementById("error");
+const searchInput = document.getElementById("search");
+
+// Store all fetched countries in memory
+let allCountries = [];
 
 
 // Function 1: Fetch the country data
@@ -31,7 +35,14 @@ async function fetchCountries() {
 // Function 2: Render the country data
 function renderCountries(countries) {
 
+  // Clear previous cards
   countriesContainer.innerHTML = "";
+
+  // Show message if no countries match
+  if (countries.length === 0) {
+    countriesContainer.innerHTML = "<p>No countries found.</p>";
+    return;
+  }
 
   countries.forEach(function(country) {
 
@@ -61,6 +72,24 @@ function renderCountries(countries) {
 }
 
 
+// Function 3: Search/filter the stored countries
+searchInput.addEventListener("input", function() {
+
+  // Get what the user typed
+  const searchText = searchInput.value.toLowerCase();
+
+  // Filter the countries already stored in memory
+  const filteredCountries = allCountries.filter(function(country) {
+
+    return country.country.toLowerCase().includes(searchText);
+
+  });
+
+  // Render only the matching countries
+  renderCountries(filteredCountries);
+});
+
+
 // Main function
 async function loadCountries() {
 
@@ -69,11 +98,14 @@ async function loadCountries() {
 
   try {
 
-    // Get the data
+    // Fetch the data only once
     const countries = await fetchCountries();
 
-    // Display the data
-    renderCountries(countries);
+    // Store the complete dataset in memory
+    allCountries = countries;
+
+    // Display all countries
+    renderCountries(allCountries);
 
     // Hide loading message
     loading.style.display = "none";
